@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team Proficiency Matrix Report</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f8fafc;
+      }
+      .chart-container {
+        position: relative;
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        height: 400px;
+      }
+      /* Custom Rating Box Styles */
+      .rating-box {
+        width: 16px;
+        height: 16px;
+        margin-right: 4px;
+        border-radius: 3px;
+        display: inline-block;
+      }
+      .rating-filled-5 {
+        background-color: #1e3a8a;
+      } /* Advanced */
+      .rating-filled-4 {
+        background-color: #2563eb;
+      } /* Upper Int */
+      .rating-filled-3 {
+        background-color: #60a5fa;
+      } /* Intermediate */
+      .rating-filled-1 {
+        background-color: #93c5fd;
+      } /* Basic */
+      .rating-empty {
+        background-color: #e2e8f0;
+      } /* Empty */
+
+      .overview-card {
+        border-top: 4px solid #1e3a8a;
+        transition: transform 0.2s ease-in-out;
+      }
+      .overview-card:hover {
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body class="text-slate-900 pb-20">
+    <!-- Header Section -->
+    <header class="bg-slate-900 text-white py-12 px-8 mb-12 shadow-xl">
+      <div
+        class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center"
+      >
+        <div class="text-center md:text-left">
+          <h1 class="text-3xl font-extrabold tracking-tight">
+            Team Specialist Competency Matrix
+          </h1>
+          <p class="text-slate-400 mt-2 font-medium italic">
+            Product Expertise & Resource Management Report
+          </p>
+        </div>
+        <div
+          class="hidden md:block text-xs font-bold text-slate-500 uppercase tracking-widest bg-white/5 px-4 py-2 rounded-lg"
+        >
+          Last Updated: Jan 2026
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 space-y-16">
+      <!-- Member Overview Section -->
+      <section>
+        <div class="flex items-center mb-8">
+          <span class="w-2 h-8 bg-blue-700 mr-4 rounded-full"></span>
+          <h2 class="text-2xl font-bold text-slate-800">
+            Individual Overviews
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Chaehyun Overview -->
+          <div
+            class="overview-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200"
+          >
+            <h3 class="font-bold text-blue-900 text-lg mb-3">Chaehyun Kim</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Mastery in <strong>Buzzword (Social Listening)</strong> and
+              <strong>Local TAR</strong> at an Advanced level. Drives strategic
+              insights through deep product knowledge and is currently enhancing
+              data workflows with Python-based automation.
+            </p>
+          </div>
+          <!-- Juhyun Overview -->
+          <div
+            class="overview-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200"
+          >
+            <h3 class="font-bold text-blue-900 text-lg mb-3">Juhyun Kim</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Expert in audience measurement with Advanced proficiency in
+              <strong>Korean Click (Netview)</strong> and
+              <strong>Local TAR/DAR</strong>. Provides essential technical
+              versatility across NMI and Arianna platforms.
+            </p>
+          </div>
+          <!-- Seohyun Overview -->
+          <div
+            class="overview-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200"
+          >
+            <h3 class="font-bold text-blue-900 text-lg mb-3">Seohyun Jun</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Leading intelligence resource for competitive analysis with
+              Advanced mastery in <strong>Arianna</strong> and
+              <strong>Adintel</strong>. Provides core support for Local TAR
+              reporting with Upper Intermediate proficiency.
+            </p>
+          </div>
+          <!-- Nahyun Overview -->
+          <div
+            class="overview-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200"
+          >
+            <h3 class="font-bold text-blue-900 text-lg mb-3">Nahyun Park</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Advanced specialist in <strong>Korean Click (Netview)</strong>.
+              Actively expanding technical scope into
+              <strong>Global DAR</strong> (Upper Int) and Python, bridging local
+              insights with global standards.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Detailed Proficiency Matrix (Card View) -->
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div
+          class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
+        >
+          <div class="bg-slate-800 p-4 text-white font-bold">Chaehyun Kim</div>
+          <div class="p-8 space-y-4" id="skills-chaehyun"></div>
+        </div>
+
+        <div
+          class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
+        >
+          <div class="bg-slate-800 p-4 text-white font-bold">Juhyun Kim</div>
+          <div class="p-8 space-y-4" id="skills-juhyun"></div>
+        </div>
+
+        <div
+          class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
+        >
+          <div class="bg-slate-800 p-4 text-white font-bold">Seohyun Jun</div>
+          <div class="p-8 space-y-4" id="skills-seohyun"></div>
+        </div>
+
+        <div
+          class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
+        >
+          <div class="bg-slate-800 p-4 text-white font-bold">Nahyun Park</div>
+          <div class="p-8 space-y-4" id="skills-nahyun"></div>
+        </div>
+      </section>
+
+      <!-- Comparative Visual Analytics -->
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-6">
+        <div
+          class="bg-white rounded-3xl p-10 shadow-sm border border-slate-200"
+        >
+          <h3
+            class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-10 text-center"
+          >
+            Cross-Member Comparison
+          </h3>
+          <div class="chart-container">
+            <canvas id="barChart"></canvas>
+          </div>
+        </div>
+        <div
+          class="bg-white rounded-3xl p-10 shadow-sm border border-slate-200"
+        >
+          <h3
+            class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-10 text-center"
+          >
+            Team Expertise Coverage (Radar)
+          </h3>
+          <div class="chart-container">
+            <canvas id="radarChart"></canvas>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Legend & Footer -->
+    <footer class="mt-20 py-10 border-t border-slate-200 text-center">
+      <div
+        class="flex flex-wrap justify-center gap-8 mb-6 text-[10px] font-bold text-slate-500 uppercase tracking-widest"
+      >
+        <div class="flex items-center">
+          <span class="w-3 h-3 rating-filled-5 mr-2 rounded-sm"></span> Advanced
+          (5)
+        </div>
+        <div class="flex items-center">
+          <span class="w-3 h-3 rating-filled-4 mr-2 rounded-sm"></span> Upper
+          Int (4)
+        </div>
+        <div class="flex items-center">
+          <span class="w-3 h-3 rating-filled-3 mr-2 rounded-sm"></span>
+          Intermediate (3)
+        </div>
+        <div class="flex items-center">
+          <span class="w-3 h-3 rating-filled-1 mr-2 rounded-sm"></span> Basic
+          (1)
+        </div>
+      </div>
+      <p
+        class="text-slate-400 text-[10px] font-medium uppercase tracking-tighter"
+      >
+        Internal Strategic Resource Assessment &bull; Confidental
+      </p>
+    </footer>
+
+    <script>
+      const teamData = [
+        {
+          id: 'skills-chaehyun',
+          name: 'Chaehyun Kim',
+          skills: [
+            {
+              label: 'Buzzword (Social Listening)',
+              score: 5,
+              level: 'Advanced',
+            },
+            { label: 'Local TAR', score: 5, level: 'Advanced' },
+            { label: 'Arianna', score: 3, level: 'Intermediate' },
+            { label: 'Adintel', score: 3, level: 'Intermediate' },
+            { label: 'Python', score: 1, level: 'Basic' },
+          ],
+        },
+        {
+          id: 'skills-juhyun',
+          name: 'Juhyun Kim',
+          skills: [
+            { label: 'Korean Click (Netview)', score: 5, level: 'Advanced' },
+            { label: 'Local TAR/DAR', score: 5, level: 'Advanced' },
+            { label: 'NMI', score: 4, level: 'Upper Intermediate' },
+            { label: 'Arianna', score: 3, level: 'Intermediate' },
+          ],
+        },
+        {
+          id: 'skills-seohyun',
+          name: 'Seohyun Jun',
+          skills: [
+            { label: 'Arianna', score: 5, level: 'Advanced' },
+            { label: 'Adintel', score: 5, level: 'Advanced' },
+            { label: 'Local TAR', score: 4, level: 'Upper Intermediate' },
+          ],
+        },
+        {
+          id: 'skills-nahyun',
+          name: 'Nahyun Park',
+          skills: [
+            { label: 'Korean Click (Netview)', score: 5, level: 'Advanced' },
+            { label: 'Global DAR', score: 4, level: 'Upper Intermediate' },
+            {
+              label: 'Buzzword (Social Listening)',
+              score: 3,
+              level: 'Intermediate',
+            },
+            { label: 'Arianna', score: 3, level: 'Intermediate' },
+            { label: 'Python', score: 1, level: 'Basic' },
+          ],
+        },
+      ];
+
+      function renderSkills() {
+        teamData.forEach((member) => {
+          const container = document.getElementById(member.id);
+          member.skills.forEach((skill) => {
+            const row = document.createElement('div');
+            row.className =
+              'flex items-center justify-between py-2 border-b border-slate-50 last:border-0 group';
+
+            let boxes = '';
+            for (let i = 1; i <= 5; i++) {
+              const filled = i <= skill.score;
+              const colorClass = filled
+                ? `rating-filled-${skill.score}`
+                : 'rating-empty';
+              boxes += `<span class="rating-box ${colorClass}"></span>`;
+            }
+
+            row.innerHTML = `
+                        <span class="text-xs font-semibold text-slate-700 group-hover:text-blue-700 transition-colors">${skill.label}</span>
+                        <div class="flex items-center">
+                            <div class="flex mr-4">${boxes}</div>
+                            <span class="text-[9px] font-bold text-slate-400 w-24 text-right uppercase tracking-tighter">${skill.level}</span>
+                        </div>
+                    `;
+            container.appendChild(row);
+          });
+        });
+      }
+
+      // Custom label wrapping for charts (split if > 16 chars)
+      function wrapLabel(label) {
+        if (label.length > 16) {
+          const words = label.split(' ');
+          const lines = [];
+          let currentLine = words[0];
+          for (let i = 1; i < words.length; i++) {
+            if ((currentLine + ' ' + words[i]).length <= 16) {
+              currentLine += ' ' + words[i];
+            } else {
+              lines.push(currentLine);
+              currentLine = words[i];
+            }
+          }
+          lines.push(currentLine);
+          return lines;
+        }
+        return label;
+      }
+
+      function initCharts() {
+        const products = [
+          'Korean Click (Netview)',
+          'Local TAR',
+          'Arianna',
+          'Buzzword (Social Listening)',
+          'Adintel',
+          'Local TAR/DAR',
+          'NMI',
+          'Global DAR',
+          'Python',
+        ];
+        const colors = ['#1E3A8A', '#2563EB', '#60A5FA', '#94A3B8'];
+
+        const datasets = teamData.map((m, i) => ({
+          label: m.name,
+          data: products.map((p) => {
+            const s = m.skills.find((sk) => sk.label === p);
+            return s ? s.score : 0;
+          }),
+          backgroundColor: colors[i],
+          borderColor: colors[i],
+          borderWidth: 1,
+        }));
+
+        // Horizontal Bar Chart
+        new Chart(document.getElementById('barChart'), {
+          type: 'bar',
+          data: {
+            labels: products.map(wrapLabel),
+            datasets: datasets,
+          },
+          options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  usePointStyle: true,
+                  font: { size: 10, weight: '600' },
+                },
+              },
+              tooltip: {
+                callbacks: {
+                  title: (items) => {
+                    const lbl = items[0].chart.data.labels[items[0].dataIndex];
+                    return Array.isArray(lbl) ? lbl.join(' ') : lbl;
+                  },
+                },
+              },
+            },
+            scales: {
+              x: { max: 5, ticks: { stepSize: 1, font: { size: 9 } } },
+              y: { ticks: { font: { size: 9, weight: '700' } } },
+            },
+          },
+        });
+
+        // Radar Chart
+        new Chart(document.getElementById('radarChart'), {
+          type: 'radar',
+          data: {
+            labels: products.map(wrapLabel),
+            datasets: teamData.map((m, i) => ({
+              label: m.name,
+              data: products.map((p) => {
+                const s = m.skills.find((sk) => sk.label === p);
+                return s ? s.score : 0;
+              }),
+              backgroundColor: colors[i] + '15',
+              borderColor: colors[i],
+              borderWidth: 2,
+              pointRadius: 2,
+            })),
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  title: (items) => {
+                    const lbl = items[0].chart.data.labels[items[0].dataIndex];
+                    return Array.isArray(lbl) ? lbl.join(' ') : lbl;
+                  },
+                },
+              },
+            },
+            scales: {
+              r: {
+                min: 0,
+                max: 5,
+                ticks: { display: false, stepSize: 1 },
+                pointLabels: {
+                  font: { size: 9, weight: '600' },
+                  color: '#64748B',
+                },
+              },
+            },
+          },
+        });
+      }
+
+      window.onload = () => {
+        renderSkills();
+        initCharts();
+      };
+    </script>
+  </body>
+</html>
